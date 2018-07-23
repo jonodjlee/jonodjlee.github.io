@@ -1,0 +1,80 @@
+.navbar {
+    background-color: none;
+    z-index: 1;
+}
+.navbar-transparent {
+    background-color: rgba(0,0,0,0) !important;
+  /* Transparent = rgba(0,0,0,0) / Translucent = (0,0,0,0.5)  */
+    transition: background-color .5s ease 0s;
+}
+.navbar-transparent.opaque {
+    background-color: black !important;
+    transition: background-color .5s ease 0s;
+}
+.navbar-transparent:hover {
+    background-color: lightcoral !important;
+}
+.nav-item {
+    color: red;
+    margin-right: 10px;
+}
+.navbar-toggler {
+    color: purple !important;
+}
+.btn-light {
+    background: none !important;
+    border: none !important;
+}
+.btn-light:hover {
+    background: black !important; 
+}
+.navlink {
+    color: white;
+}
+#mcshome {
+    width: 100%;
+    height: 1000px;
+    background-image: 
+        linear-gradient(
+            135deg,
+            /*rgb(74, 46, 255), 
+            rgb(156, 255, 196)*/
+            #88d3ce,
+            #6e45e2
+        );
+}
+.maintitle {
+    width: 500px;
+    height: 50px;
+    position: relative;
+    align-content: center;
+    display: block;
+    margin: -100px 0 0 -250px;
+    left: 50%;
+    top: 45%;
+    font-family: "Toriga Medium", "Gestalt", "Century Gothic", "Gotham", "Avenir Light", sans-serif;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 30pt;
+    color: white;
+}
+#button1 {
+    width: 150px;
+    height: 50px;
+    border-radius: 40px;
+    border: 3px solid white;
+    background-color: white;
+    font-family: "VIC Medium", "Brandon", "Gotham", sans-serif;
+    text-align: center;
+    font-size: 16pt;
+    margin: auto;
+    margin-top: 250px;
+}
+#button1:hover {
+    background-color: yellow;
+    border: yellow;
+}
+.pagediv {
+    height: 500px;
+    background-color: beige;
+}
