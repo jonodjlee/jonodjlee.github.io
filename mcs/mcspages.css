@@ -1,0 +1,48 @@
+/* If the screen size is 600px wide or less, set the font-size of <h1> to 30pt */
+@media screen and (max-width: 600px) {
+    h1.display-4 {
+        font-size: 30pt;
+        width: 300px;
+        margin: 100px 0 0 -150px;
+        left: 50%;
+    }
+}
+
+/****************************
+|------Jumbotron Styles------|
+*****************************/
+
+.jumbotron {
+    height: 500px;
+    margin-bottom: 0;
+    background-image:
+        linear-gradient(
+            135deg,
+            /*rgb(74, 46, 255), 
+            rgb(156, 255, 196)*/
+            #88d3ce,
+            #6e45e2
+        );
+}
+.display-4 {
+    margin: 120px 0 0 0;
+}
+.lead {
+    margin: 20px 0 0 0;
+}
+.display-4, .lead {
+    font-family: "Montserrat", "Gotham", "Avenir", "Helvetica Neue", sans-serif;
+    text-transform: uppercase;
+    color: white;
+    text-align: center;
+    position: relative;
+    display: block;
+}
+
+/****************************
+|------Scroll Anchor Styles------|
+*****************************/
+
+.spy {
+    margin-top: 100px;
+}
