@@ -343,12 +343,13 @@
     <!-- End Lyra-->
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/mcs.css">
-    <link rel="stylesheet" href="assets/css/mcs1.css">-->
+    <link rel="stylesheet" href="assets/css/mcs1.css">
+    <link rel="stylesheet" href="assets/css/form.css">
     <link rel="stylesheet" href="assets/css/cursor.css">
-    <!--<link rel="stylesheet" href="assets/Evie/css/style.css">
-    <link rel="stylesheet" href="assets/css/whispir.css">
-    <link rel="stylesheet" href="assets/css/wforms-layout.css">-->
+    <!--<link rel="stylesheet" href="assets/Evie/css/style.css">-->
     <link rel="stylesheet" href="assets/css/micromodal.css">
+    <link rel="stylesheet" href="assets/datepicker-1.0.9/dist/datepicker.css">
+    <!--<link rel="stylesheet" href="assets/bootstrap-datepicker-master/dist/css/bootstrap-datepicker.css">-->
     <link rel="stylesheet" href="assets/fonts/medel.css">
     <link rel="stylesheet" href="assets/fonts/montserrat.css">
     <link rel="stylesheet" href="assets/fonts/toriga.css">
@@ -380,6 +381,69 @@
                 text-align: center;
                 margin-top: 1rem;
             }
+        }
+
+        .qcheck[type="checkbox"]:not(:checked),
+        .qcheck[type="checkbox"]:checked {
+            position: absolute;
+            left: -9999px;
+            visibility: hidden;
+        }
+
+        .qcheck[type="checkbox"] {
+            /* checkbox aspect */
+        }
+
+        .qcheck[type="checkbox"]+label {
+            position: relative;
+            padding-left: 2em;
+            cursor: pointer;
+            display: inline-block;
+            height: 25px;
+            line-height: 25px;
+            font-size: 0.9em;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -khtml-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .qcheck[type="checkbox"]+label:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 3px;
+            width: 15px;
+            height: 15px;
+            z-index: 0;
+            border: 1px solid #666;
+            border-radius: 1px;
+            margin-top: 4px;
+            transition: .2s;
+        }
+
+        .qcheck[type="checkbox"]:not(:checked):disabled+label:before {
+            border: none;
+            background-color: #eee;
+        }
+
+        .qcheck[type="checkbox"]:checked+label:before {
+            top: -2px;
+            left: -2px;
+            width: 10px;
+            height: 18px;
+            border-top: 2px solid transparent;
+            border-left: 2px solid transparent;
+            border-right: 2px solid #06d19c;
+            border-bottom: 2px solid #06d19c;
+            transform: rotate(40deg);
+            backface-visibility: hidden;
+            transform-origin: 100% 100%;
+        }
+
+        .qcheck[type="checkbox"]:checked:disabled+label:before {
+            border-right: 2px solid #eee;
+            border-bottom: 2px solid #eee;
         }
 
     </style>
@@ -481,28 +545,593 @@
                     <h1 class="textb white herotitle" style="text-align: center; padding-top: 200px">Patient Referral</h1>
                 </div>
             </div>
-            <div class="container-fluid feature row" style="margin-left: 0 !important; margin-right: 0 !important; padding-left: 0 !important; padding-right: 0 !important;">
-                <div class="col-1"></div>
-                <div class="col-10 py-5 text3 container container--adaptive">
+            <div class="container-fluid feature row" style="background: var(--color-bg); margin-left: 0 !important; margin-right: 0 !important; padding-left: 0 !important; padding-right: 0 !important;">
+                <div class="col-sm-1"></div>
+                <div class="col-12 col-sm-10 py-5 text3 container container--adaptive">
                     <p class="textp1">
                         MCS welcomes new patients. If you are a doctor and wish to refer a patient to us, please fill out the form below. Alternatively, we have a PDF form which you can download here and email back to us.
                     </p>
-                    <form class="mt-4">
-                        <div class="double">
-                            <div class="half">
-                                <label for="first">First</label>
-                                <input type="text" id="first" placeholder="Type...">
-                            </div>
-                            <div class="half">
-                                <label for="second">Last</label>
-                                <input type="text" id="second" placeholder="Type...">
+                    <div class="container">
+                        <div class="row pb-5">
+                            <div class="col-12">
+                                <div class="form-assembly-form__container">
+                                    <div class="formcontainer">
+                                        <div class="">
+                                            <div class="form" dir="ltr">
+                                                <!--<form method="post" action="https://api.formcake.com/api/form/c4b64f6a-549f-48f8-8f3a-be1d9abf8bb9/submission" role="form" enctype="application/x-www-form-urlencoded">
+                                                    <fieldset class="mt-4">
+                                                        <legend class="textp">Patient Details</legend>
+                                                        <div class="section inline group">
+                                                            <div class="oneField fieldcontainer">
+                                                                <label class="label reqstar">First Name</label>
+                                                                <br>
+                                                                <div class="inputWrapper">
+                                                                    <input type="text" name="patient first name" value="" aria-required="true" title="First Name" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="oneField fieldcontainer" style="padding-left: 10px">
+                                                                <label class="label reqstar">Last Name</label>
+                                                                <br>
+                                                                <div class="inputWrapper">
+                                                                    <input type="text" name="patient last name" value="" aria-required="true" title="Last Name" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="oneField fieldcontainer">
+                                                            <label class="label reqstar">Date Of Birth (dd/mm/yyyy)</label>
+                                                            <br>
+                                                            <div class="inputWrapper">
+                                                                <input id="date" type="text" data-toggle="datepicker" value="" aria-required="true" title="Date Of Birth" required oninput="formatDate()">
+                                                                <input id="outputDate" type="date" name="patient dob" value="" style="display: none">
+                                                            </div>
+                                                        </div>
+                                                        <div class="oneField fieldcontainer">
+                                                            <label class="label reqstar">Mobile Number</label>
+                                                            <br>
+                                                            <div class="inputWrapper">
+                                                                <input type="text" name="patient mobile" value="" maxlength="12" pattern="[0-9]{4}[ ][0-9]{3}[ ][0-9]{3}$" aria-required="true" title="Phone Number" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="oneField fieldcontainer">
+                                                            <label class="label reqstar">Address 1</label>
+                                                            <br>
+                                                            <div class="inputWrapper">
+                                                                <input type="text" name="patient address 1" value="" aria-required="true" title="Address 1" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="oneField fieldcontainer">
+                                                            <label class="label">Address 2</label>
+                                                            <br>
+                                                            <div class="inputWrapper">
+                                                                <input type="text" name="patient address 2" value="" aria-required="false" title="Address 2">
+                                                            </div>
+                                                        </div>
+                                                        <div class="section inline group">
+                                                            <div class="oneField fieldcontainer">
+                                                                <label class="label reqstar">City/Suburb</label>
+                                                                <br>
+                                                                <div class="inputWrapper">
+                                                                    <input type="text" name="patient suburb" value="" aria-required="true" title="City/Suburb" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="oneField fieldcontainer" style="padding-left: 10px">
+                                                                <label class="label reqstar">Postcode</label>
+                                                                <br>
+                                                                <div class="inputWrapper">
+                                                                    <input type="text" name="patient postcode" value="" aria-required="true" title="Postcode" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <p class="mt-3">Investigation Required</p>
+                                                        <div class="mt-3">
+                                                            <input type="checkbox" name="echo" value="echo " class="qcheck" id="echocheck" />
+                                                            <label for="echocheck">Echocardiography</label>
+                                                        </div>
+                                                        <div class="mt-3">
+                                                            <input type="checkbox" name="stress echo" value="stressecho " class="qcheck" id="stressechocheck" />
+                                                            <label for="stressechocheck">Stress Echocardiography</label>
+                                                        </div>
+                                                        <div class="mt-3">
+                                                            <input type="checkbox" name="holter" value="holter " class="qcheck" id="holtercheck" />
+                                                            <label for="holtercheck">Holter Monitoring</label>
+                                                        </div>
+                                                        <div class="mt-3">
+                                                            <input type="checkbox" name="consult" value="consult " class="qcheck" id="consultcheck" />
+                                                            <label for="consultcheck">Consultation</label>
+                                                        </div>
+                                                        <div class="oneField fieldcontainer">
+                                                            <label class="label">Investigation Required</label>
+                                                            <br>
+                                                            <div class="inputWrapper">
+                                                                <select name="investigation required" multiple data-jcf='{"wrapNative": false, "wrapNativeOnMobile": false, "useCustomScroll": false, "multipleCompactStyle": true}'>
+                                                                    <option value="v2">Echocardiography</option>
+                                                                    <option value="v3">Stress Echocardiography</option>
+                                                                    <option value="v4">Holter Monitoring</option>
+                                                                    <option value="v5">Consultation</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="oneField fieldcontainer">
+                                                            <label class="label reqstar">Clinical Details</label>
+                                                            <br>
+                                                            <div class="inputWrapper">
+                                                                <textarea name="clinical details" aria-required="true" title="Clinical Details" required></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                    <fieldset class="mt-4">
+                                                        <legend class="textp">Referring Doctor's Details</legend>
+                                                        <div class="section inline group">
+                                                            <div class="oneField fieldcontainer">
+                                                                <label class="label reqstar">First Name</label>
+                                                                <br>
+                                                                <div class="inputWrapper">
+                                                                    <input type="text" name="ref dr first name" value="" aria-required="true" title="First Name" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="oneField fieldcontainer" style="padding-left: 10px">
+                                                                <label class="label reqstar">Last Name</label>
+                                                                <br>
+                                                                <div class="inputWrapper">
+                                                                    <input type="text" name="ref dr last name" value="" aria-required="true" title="Last Name" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="oneField fieldcontainer">
+                                                            <label class="label reqstar">Provider Number</label>
+                                                            <br>
+                                                            <div class="inputWrapper">
+                                                                <input type="text" name="ref dr provider number" value="" maxlength="10" aria-required="true" title="Provider Number" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="oneField fieldcontainer">
+                                                            <label class="label reqstar">Address for Correspondence</label>
+                                                            <br>
+                                                            <div class="inputWrapper">
+                                                                <textarea name="correspondence address" aria-required="true" title="Correspondence Address" required></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="oneField fieldcontainer">
+                                                            <label class="label reqstar">Email</label>
+                                                            <br>
+                                                            <div class="inputWrapper">
+                                                                <input type="email" name="ref dr email" value="" aria-required="true" title="Email" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="oneField fieldcontainer">
+                                                            <label class="label">Phone</label>
+                                                            <br>
+                                                            <div class="inputWrapper">
+                                                                <input type="text" name="ref dr phone" value="" maxlength="12" aria-required="true" title="Phone Number">
+                                                            </div>
+                                                        </div>
+                                                        <div class="oneField fieldcontainer">
+                                                            <label class="label">Fax</label>
+                                                            <br>
+                                                            <div class="inputWrapper">
+                                                                <input type="text" name="ref dr fax" value="" maxlength="9" pattern="[0-9]{4}[ ][0-9]{4}$" aria-required="true" title="Fax">
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                    <input type="hidden" value="" class="">
+                                                    <div class="mt-3">
+                                                        <input type="checkbox" class="qcheck" id="drcheck" required />
+                                                        <label for="drcheck" class="label reqstar">I certify that I am a registered Medical Practitioner</label>
+                                                    </div>
+                                                    <input type="text" name="_honey" style="display:none">
+                                                    <button type="submit" class="boldbtn mt-3 py-3" style="border: none; width: 100%">Submit</button>
+                                                </form>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal__content px-sm-5">
+                                    <form method="post" action="https://api.formcake.com/api/form/c4b64f6a-549f-48f8-8f3a-be1d9abf8bb9/submission" role="form" enctype="application/x-www-form-urlencoded" class="form" id="form">
+
+                                        <fieldset>
+                                            <legend class="textp textc">Patient Details</legend>
+                                            <div class="twingroup">
+                                                <div class="input-wrapper twin">
+                                                    <input data-parsley-trigger="change" data-parsley-error-message="First name required." type="text" name="patient first name" title="Patient's first name" id="pfirstname" value="" aria-required="true" required="" class="form__input">
+                                                    <label class="form__label reqstar" for="pfirstname">First Name
+                                                        <svg class="form__valid" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="611.983px" height="611.983px" viewBox="0 0 611.983 611.983" style="enable-background:new 0 0 611.983 611.983;" xml:space="preserve">
+                                                            <g>
+                                                                <path d="M217.625,515.458h-0.06c-6.517,0-12.775-2.65-17.379-7.255L7.147,313.77c-9.586-9.646-9.506-25.211,0.1-34.757
+                    c9.706-9.626,25.211-9.526,34.757,0.1l175.66,176.956L570.021,103.73c9.626-9.606,25.171-9.606,34.757,0
+                    c9.606,9.586,9.606,25.151,0,34.757L235.003,508.264C230.399,512.867,224.142,515.458,217.625,515.458z" />
+                                                            </g>
+                                                        </svg>
+                                                    </label>
+                                                    <svg class="form__close" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+                                                        <g id="_x31_0_41_">
+                                                            <path d="M415.338,196.662c-7.535-7.535-19.737-7.535-27.253,0l-82.181,82.18l-81.033-81.032c-7.478-7.478-19.584-7.478-27.042,0
+                    c-7.478,7.478-7.478,19.584,0,27.042l81.033,81.033l-81.587,81.587c-7.535,7.535-7.535,19.736,0,27.253s19.737,7.517,27.253,0
+                    l81.588-81.587l81.032,81.032c7.478,7.478,19.584,7.478,27.043,0c7.478-7.478,7.478-19.584,0-27.043l-81.033-81.032l82.181-82.18
+                    C422.873,216.399,422.873,204.179,415.338,196.662z M306,0C136.992,0,0,136.992,0,306s136.992,306,306,306
+                    c168.988,0,306-137.012,306-306S475.008,0,306,0z M306,573.75C158.125,573.75,38.25,453.875,38.25,306
+                    C38.25,158.125,158.125,38.25,306,38.25c147.875,0,267.75,119.875,267.75,267.75C573.75,453.875,453.875,573.75,306,573.75z" />
+                                                        </g>
+                                                    </svg>
+                                                </div>
+
+                                                <div class="input-wrapper twin">
+                                                    <input data-parsley-trigger="change" data-parsley-error-message="Last name required." type="text" name="patient last name" title="Patient's last name" id="plastname" value="" aria-required="true" required="" class="form__input">
+                                                    <label class="form__label reqstar" for="plastname">Last Name
+                                                        <svg class="form__valid" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="611.983px" height="611.983px" viewBox="0 0 611.983 611.983" style="enable-background:new 0 0 611.983 611.983;" xml:space="preserve">
+                                                            <g>
+                                                                <path d="M217.625,515.458h-0.06c-6.517,0-12.775-2.65-17.379-7.255L7.147,313.77c-9.586-9.646-9.506-25.211,0.1-34.757
+                    c9.706-9.626,25.211-9.526,34.757,0.1l175.66,176.956L570.021,103.73c9.626-9.606,25.171-9.606,34.757,0
+                    c9.606,9.586,9.606,25.151,0,34.757L235.003,508.264C230.399,512.867,224.142,515.458,217.625,515.458z" />
+                                                            </g>
+                                                        </svg>
+                                                    </label>
+                                                    <svg class="form__close" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+                                                        <g id="_x31_0_41_">
+                                                            <path d="M415.338,196.662c-7.535-7.535-19.737-7.535-27.253,0l-82.181,82.18l-81.033-81.032c-7.478-7.478-19.584-7.478-27.042,0
+                    c-7.478,7.478-7.478,19.584,0,27.042l81.033,81.033l-81.587,81.587c-7.535,7.535-7.535,19.736,0,27.253s19.737,7.517,27.253,0
+                    l81.588-81.587l81.032,81.032c7.478,7.478,19.584,7.478,27.043,0c7.478-7.478,7.478-19.584,0-27.043l-81.033-81.032l82.181-82.18
+                    C422.873,216.399,422.873,204.179,415.338,196.662z M306,0C136.992,0,0,136.992,0,306s136.992,306,306,306
+                    c168.988,0,306-137.012,306-306S475.008,0,306,0z M306,573.75C158.125,573.75,38.25,453.875,38.25,306
+                    C38.25,158.125,158.125,38.25,306,38.25c147.875,0,267.75,119.875,267.75,267.75C573.75,453.875,453.875,573.75,306,573.75z" />
+                                                        </g>
+                                                    </svg>
+                                                </div>
+                                            </div>
+
+                                            <div class="input-wrapper">
+                                                <input data-parsley-trigger="change" data-parsley-error-message="DOB required." type="text" title="Patient's date of birth" id="date" value="" aria-required="true" required="" class="form__input" oninput="formatDate()">
+                                                <input id="outputDate" type="date" name="patient dob" value="" style="display: none">
+                                                <label class="form__label reqstar" for="date">Date of Birth (dd/mm/yyyy)
+                                                    <svg class="form__valid" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="611.983px" height="611.983px" viewBox="0 0 611.983 611.983" style="enable-background:new 0 0 611.983 611.983;" xml:space="preserve">
+                                                        <g>
+                                                            <path d="M217.625,515.458h-0.06c-6.517,0-12.775-2.65-17.379-7.255L7.147,313.77c-9.586-9.646-9.506-25.211,0.1-34.757
+                    c9.706-9.626,25.211-9.526,34.757,0.1l175.66,176.956L570.021,103.73c9.626-9.606,25.171-9.606,34.757,0
+                    c9.606,9.586,9.606,25.151,0,34.757L235.003,508.264C230.399,512.867,224.142,515.458,217.625,515.458z" />
+                                                        </g>
+                                                    </svg>
+                                                </label>
+                                                <svg class="form__close" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+                                                    <g id="_x31_0_41_">
+                                                        <path d="M415.338,196.662c-7.535-7.535-19.737-7.535-27.253,0l-82.181,82.18l-81.033-81.032c-7.478-7.478-19.584-7.478-27.042,0
+                    c-7.478,7.478-7.478,19.584,0,27.042l81.033,81.033l-81.587,81.587c-7.535,7.535-7.535,19.736,0,27.253s19.737,7.517,27.253,0
+                    l81.588-81.587l81.032,81.032c7.478,7.478,19.584,7.478,27.043,0c7.478-7.478,7.478-19.584,0-27.043l-81.033-81.032l82.181-82.18
+                    C422.873,216.399,422.873,204.179,415.338,196.662z M306,0C136.992,0,0,136.992,0,306s136.992,306,306,306
+                    c168.988,0,306-137.012,306-306S475.008,0,306,0z M306,573.75C158.125,573.75,38.25,453.875,38.25,306
+                    C38.25,158.125,158.125,38.25,306,38.25c147.875,0,267.75,119.875,267.75,267.75C573.75,453.875,453.875,573.75,306,573.75z" />
+                                                    </g>
+                                                </svg>
+                                            </div>
+
+                                            <div class="input-wrapper">
+                                                <input data-parsley-trigger="keyup" data-parsley-error-message="Phone number required." type="text" name="patient mobile" title="Phone Number" id="pmobile" value="" aria-required="true" required="" class="form__input" maxlength="12">
+                                                <label class="form__label reqstar" for="pmobile">Mobile Number
+                                                    <svg class="form__valid" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="611.983px" height="611.983px" viewBox="0 0 611.983 611.983" style="enable-background:new 0 0 611.983 611.983;" xml:space="preserve">
+                                                        <g>
+                                                            <path d="M217.625,515.458h-0.06c-6.517,0-12.775-2.65-17.379-7.255L7.147,313.77c-9.586-9.646-9.506-25.211,0.1-34.757
+                    c9.706-9.626,25.211-9.526,34.757,0.1l175.66,176.956L570.021,103.73c9.626-9.606,25.171-9.606,34.757,0
+                    c9.606,9.586,9.606,25.151,0,34.757L235.003,508.264C230.399,512.867,224.142,515.458,217.625,515.458z" />
+                                                        </g>
+                                                    </svg>
+                                                </label>
+                                                <svg class="form__close" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+                                                    <g id="_x31_0_41_">
+                                                        <path d="M415.338,196.662c-7.535-7.535-19.737-7.535-27.253,0l-82.181,82.18l-81.033-81.032c-7.478-7.478-19.584-7.478-27.042,0
+                    c-7.478,7.478-7.478,19.584,0,27.042l81.033,81.033l-81.587,81.587c-7.535,7.535-7.535,19.736,0,27.253s19.737,7.517,27.253,0
+                    l81.588-81.587l81.032,81.032c7.478,7.478,19.584,7.478,27.043,0c7.478-7.478,7.478-19.584,0-27.043l-81.033-81.032l82.181-82.18
+                    C422.873,216.399,422.873,204.179,415.338,196.662z M306,0C136.992,0,0,136.992,0,306s136.992,306,306,306
+                    c168.988,0,306-137.012,306-306S475.008,0,306,0z M306,573.75C158.125,573.75,38.25,453.875,38.25,306
+                    C38.25,158.125,158.125,38.25,306,38.25c147.875,0,267.75,119.875,267.75,267.75C573.75,453.875,453.875,573.75,306,573.75z" />
+                                                    </g>
+                                                </svg>
+                                            </div>
+
+                                            <div class="input-wrapper">
+                                                <input data-parsley-trigger="change" data-parsley-error-message="Address is required." type="text" name="patient address 1" title="Patient's Address 1" id="paddress1" value="" aria-required="true" required="" class="form__input">
+                                                <label class="form__label reqstar" for="paddress1">Address 1
+                                                    <svg class="form__valid" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="611.983px" height="611.983px" viewBox="0 0 611.983 611.983" style="enable-background:new 0 0 611.983 611.983;" xml:space="preserve">
+                                                        <g>
+                                                            <path d="M217.625,515.458h-0.06c-6.517,0-12.775-2.65-17.379-7.255L7.147,313.77c-9.586-9.646-9.506-25.211,0.1-34.757
+                    c9.706-9.626,25.211-9.526,34.757,0.1l175.66,176.956L570.021,103.73c9.626-9.606,25.171-9.606,34.757,0
+                    c9.606,9.586,9.606,25.151,0,34.757L235.003,508.264C230.399,512.867,224.142,515.458,217.625,515.458z" />
+                                                        </g>
+                                                    </svg>
+                                                </label>
+                                                <svg class="form__close" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+                                                    <g id="_x31_0_41_">
+                                                        <path d="M415.338,196.662c-7.535-7.535-19.737-7.535-27.253,0l-82.181,82.18l-81.033-81.032c-7.478-7.478-19.584-7.478-27.042,0
+                    c-7.478,7.478-7.478,19.584,0,27.042l81.033,81.033l-81.587,81.587c-7.535,7.535-7.535,19.736,0,27.253s19.737,7.517,27.253,0
+                    l81.588-81.587l81.032,81.032c7.478,7.478,19.584,7.478,27.043,0c7.478-7.478,7.478-19.584,0-27.043l-81.033-81.032l82.181-82.18
+                    C422.873,216.399,422.873,204.179,415.338,196.662z M306,0C136.992,0,0,136.992,0,306s136.992,306,306,306
+                    c168.988,0,306-137.012,306-306S475.008,0,306,0z M306,573.75C158.125,573.75,38.25,453.875,38.25,306
+                    C38.25,158.125,158.125,38.25,306,38.25c147.875,0,267.75,119.875,267.75,267.75C573.75,453.875,453.875,573.75,306,573.75z" />
+                                                    </g>
+                                                </svg>
+                                            </div>
+
+                                            <div class="input-wrapper">
+                                                <input data-parsley-trigger="change" type="text" name="patient address 2" title="Patient's Address 2" id="paddress2" value="" aria-required="false" class="form__input">
+                                                <label class="form__label" for="paddress2">Address 2
+                                                    <svg class="form__valid" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="611.983px" height="611.983px" viewBox="0 0 611.983 611.983" style="enable-background:new 0 0 611.983 611.983;" xml:space="preserve">
+                                                        <g>
+                                                            <path d="M217.625,515.458h-0.06c-6.517,0-12.775-2.65-17.379-7.255L7.147,313.77c-9.586-9.646-9.506-25.211,0.1-34.757
+                    c9.706-9.626,25.211-9.526,34.757,0.1l175.66,176.956L570.021,103.73c9.626-9.606,25.171-9.606,34.757,0
+                    c9.606,9.586,9.606,25.151,0,34.757L235.003,508.264C230.399,512.867,224.142,515.458,217.625,515.458z" />
+                                                        </g>
+                                                    </svg>
+                                                </label>
+                                                <svg class="form__close" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+                                                    <g id="_x31_0_41_">
+                                                        <path d="M415.338,196.662c-7.535-7.535-19.737-7.535-27.253,0l-82.181,82.18l-81.033-81.032c-7.478-7.478-19.584-7.478-27.042,0
+                    c-7.478,7.478-7.478,19.584,0,27.042l81.033,81.033l-81.587,81.587c-7.535,7.535-7.535,19.736,0,27.253s19.737,7.517,27.253,0
+                    l81.588-81.587l81.032,81.032c7.478,7.478,19.584,7.478,27.043,0c7.478-7.478,7.478-19.584,0-27.043l-81.033-81.032l82.181-82.18
+                    C422.873,216.399,422.873,204.179,415.338,196.662z M306,0C136.992,0,0,136.992,0,306s136.992,306,306,306
+                    c168.988,0,306-137.012,306-306S475.008,0,306,0z M306,573.75C158.125,573.75,38.25,453.875,38.25,306
+                    C38.25,158.125,158.125,38.25,306,38.25c147.875,0,267.75,119.875,267.75,267.75C573.75,453.875,453.875,573.75,306,573.75z" />
+                                                    </g>
+                                                </svg>
+                                            </div>
+
+                                            <div class="twingroup">
+                                                <div class="input-wrapper twin">
+                                                    <input data-parsley-trigger="change" data-parsley-error-message="Suburb is required." type="text" name="patient suburb" title="Patient's City/Suburb" id="psuburb" value="" aria-required="true" required="" class="form__input">
+                                                    <label class="form__label reqstar" for="psuburb">City/Suburb
+                                                        <svg class="form__valid" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="611.983px" height="611.983px" viewBox="0 0 611.983 611.983" style="enable-background:new 0 0 611.983 611.983;" xml:space="preserve">
+                                                            <g>
+                                                                <path d="M217.625,515.458h-0.06c-6.517,0-12.775-2.65-17.379-7.255L7.147,313.77c-9.586-9.646-9.506-25.211,0.1-34.757
+                    c9.706-9.626,25.211-9.526,34.757,0.1l175.66,176.956L570.021,103.73c9.626-9.606,25.171-9.606,34.757,0
+                    c9.606,9.586,9.606,25.151,0,34.757L235.003,508.264C230.399,512.867,224.142,515.458,217.625,515.458z" />
+                                                            </g>
+                                                        </svg>
+                                                    </label>
+                                                    <svg class="form__close" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+                                                        <g id="_x31_0_41_">
+                                                            <path d="M415.338,196.662c-7.535-7.535-19.737-7.535-27.253,0l-82.181,82.18l-81.033-81.032c-7.478-7.478-19.584-7.478-27.042,0
+                    c-7.478,7.478-7.478,19.584,0,27.042l81.033,81.033l-81.587,81.587c-7.535,7.535-7.535,19.736,0,27.253s19.737,7.517,27.253,0
+                    l81.588-81.587l81.032,81.032c7.478,7.478,19.584,7.478,27.043,0c7.478-7.478,7.478-19.584,0-27.043l-81.033-81.032l82.181-82.18
+                    C422.873,216.399,422.873,204.179,415.338,196.662z M306,0C136.992,0,0,136.992,0,306s136.992,306,306,306
+                    c168.988,0,306-137.012,306-306S475.008,0,306,0z M306,573.75C158.125,573.75,38.25,453.875,38.25,306
+                    C38.25,158.125,158.125,38.25,306,38.25c147.875,0,267.75,119.875,267.75,267.75C573.75,453.875,453.875,573.75,306,573.75z" />
+                                                        </g>
+                                                    </svg>
+                                                </div>
+
+                                                <div class="input-wrapper twin">
+                                                    <input data-parsley-trigger="change" data-parsley-error-message="Postcode is required." type="text" name="patient postcode" title="Patient's Postcode" id="ppostcode" value="" aria-required="true" required="" class="form__input">
+                                                    <label class="form__label reqstar" for="ppostcode">Postcode
+                                                        <svg class="form__valid" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="611.983px" height="611.983px" viewBox="0 0 611.983 611.983" style="enable-background:new 0 0 611.983 611.983;" xml:space="preserve">
+                                                            <g>
+                                                                <path d="M217.625,515.458h-0.06c-6.517,0-12.775-2.65-17.379-7.255L7.147,313.77c-9.586-9.646-9.506-25.211,0.1-34.757
+                    c9.706-9.626,25.211-9.526,34.757,0.1l175.66,176.956L570.021,103.73c9.626-9.606,25.171-9.606,34.757,0
+                    c9.606,9.586,9.606,25.151,0,34.757L235.003,508.264C230.399,512.867,224.142,515.458,217.625,515.458z" />
+                                                            </g>
+                                                        </svg>
+                                                    </label>
+                                                    <svg class="form__close" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+                                                        <g id="_x31_0_41_">
+                                                            <path d="M415.338,196.662c-7.535-7.535-19.737-7.535-27.253,0l-82.181,82.18l-81.033-81.032c-7.478-7.478-19.584-7.478-27.042,0
+                    c-7.478,7.478-7.478,19.584,0,27.042l81.033,81.033l-81.587,81.587c-7.535,7.535-7.535,19.736,0,27.253s19.737,7.517,27.253,0
+                    l81.588-81.587l81.032,81.032c7.478,7.478,19.584,7.478,27.043,0c7.478-7.478,7.478-19.584,0-27.043l-81.033-81.032l82.181-82.18
+                    C422.873,216.399,422.873,204.179,415.338,196.662z M306,0C136.992,0,0,136.992,0,306s136.992,306,306,306
+                    c168.988,0,306-137.012,306-306S475.008,0,306,0z M306,573.75C158.125,573.75,38.25,453.875,38.25,306
+                    C38.25,158.125,158.125,38.25,306,38.25c147.875,0,267.75,119.875,267.75,267.75C573.75,453.875,453.875,573.75,306,573.75z" />
+                                                        </g>
+                                                    </svg>
+                                                </div>
+                                            </div>
+
+                                            <p class="mt-3 textc reqstar">Investigation Required</p>
+                                            <div>
+                                                <input type="checkbox" name="echo" value="echo " class="qcheck" id="echocheck" data-parsley-multiple="investigationrequiredlink" data-parsley-error-message="At least 1 selection is required." />
+                                                <label for="echocheck" class="textc">Echocardiography</label><br>
+                                                <input type="checkbox" name="stress echo" value="stressecho " class="qcheck" id="stressechocheck" data-parsley-multiple="investigationrequiredlink" data-parsley-mincheck="1" data-parsley-required data-parsley-error-message="Please choose at least 1" />
+                                                <label for="stressechocheck" class="textc">Stress Echocardiography</label><br>
+                                                <input type="checkbox" name="holter" value="holter " class="qcheck" id="holtercheck" data-parsley-multiple="investigationrequiredlink" data-parsley-mincheck="1" data-parsley-required data-parsley-error-message="Please choose at least 1" />
+                                                <label for="holtercheck" class="textc">Holter Monitoring</label><br>
+                                                <input type="checkbox" name="consult" value="consult " class="qcheck" id="consultcheck" data-parsley-multiple="investigationrequiredlink" data-parsley-mincheck="1" data-parsley-required data-parsley-error-message="Please choose at least 1" />
+                                                <label for="consultcheck" class="textc">Consultation</label>
+                                            </div>
+
+                                            <div class="input-wrapper">
+                                                <textarea data-parsley-trigger="keyup" data-parsley-minlength="2" data-parsley-validation-threshold="1" data-parsley-error-message="Clinical details required." name="clinical details" title="Clinical Details" id="pclindetails" value="" aria-required="true" required="" class="form__input"></textarea>
+                                                <label class="form__label reqstar" for="pclindetails">Clinical Details
+                                                    <svg class="form__valid" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="611.983px" height="611.983px" viewBox="0 0 611.983 611.983" style="enable-background:new 0 0 611.983 611.983;" xml:space="preserve">
+                                                        <g>
+                                                            <path d="M217.625,515.458h-0.06c-6.517,0-12.775-2.65-17.379-7.255L7.147,313.77c-9.586-9.646-9.506-25.211,0.1-34.757
+                    c9.706-9.626,25.211-9.526,34.757,0.1l175.66,176.956L570.021,103.73c9.626-9.606,25.171-9.606,34.757,0
+                    c9.606,9.586,9.606,25.151,0,34.757L235.003,508.264C230.399,512.867,224.142,515.458,217.625,515.458z" />
+                                                        </g>
+                                                    </svg>
+                                                </label>
+                                                <svg class="form__close" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+                                                    <g id="_x31_0_41_">
+                                                        <path d="M415.338,196.662c-7.535-7.535-19.737-7.535-27.253,0l-82.181,82.18l-81.033-81.032c-7.478-7.478-19.584-7.478-27.042,0
+                    c-7.478,7.478-7.478,19.584,0,27.042l81.033,81.033l-81.587,81.587c-7.535,7.535-7.535,19.736,0,27.253s19.737,7.517,27.253,0
+                    l81.588-81.587l81.032,81.032c7.478,7.478,19.584,7.478,27.043,0c7.478-7.478,7.478-19.584,0-27.043l-81.033-81.032l82.181-82.18
+                    C422.873,216.399,422.873,204.179,415.338,196.662z M306,0C136.992,0,0,136.992,0,306s136.992,306,306,306
+                    c168.988,0,306-137.012,306-306S475.008,0,306,0z M306,573.75C158.125,573.75,38.25,453.875,38.25,306
+                    C38.25,158.125,158.125,38.25,306,38.25c147.875,0,267.75,119.875,267.75,267.75C573.75,453.875,453.875,573.75,306,573.75z" />
+                                                    </g>
+                                                </svg>
+                                            </div>
+
+
+                                        </fieldset>
+                                        <fieldset class="mt-4">
+                                            <legend class="textp textc">Referring Doctor's Details</legend>
+                                            <div class="twingroup">
+                                                <div class="input-wrapper twin">
+                                                    <input data-parsley-trigger="change" data-parsley-error-message="First name required." type="text" name="ref dr first name" title="Doctor's first name" id="dfirstname" value="" aria-required="true" required="" class="form__input">
+                                                    <label class="form__label reqstar" for="dfirstname">First Name
+                                                        <svg class="form__valid" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="611.983px" height="611.983px" viewBox="0 0 611.983 611.983" style="enable-background:new 0 0 611.983 611.983;" xml:space="preserve">
+                                                            <g>
+                                                                <path d="M217.625,515.458h-0.06c-6.517,0-12.775-2.65-17.379-7.255L7.147,313.77c-9.586-9.646-9.506-25.211,0.1-34.757
+                    c9.706-9.626,25.211-9.526,34.757,0.1l175.66,176.956L570.021,103.73c9.626-9.606,25.171-9.606,34.757,0
+                    c9.606,9.586,9.606,25.151,0,34.757L235.003,508.264C230.399,512.867,224.142,515.458,217.625,515.458z" />
+                                                            </g>
+                                                        </svg>
+                                                    </label>
+                                                    <svg class="form__close" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+                                                        <g id="_x31_0_41_">
+                                                            <path d="M415.338,196.662c-7.535-7.535-19.737-7.535-27.253,0l-82.181,82.18l-81.033-81.032c-7.478-7.478-19.584-7.478-27.042,0
+                    c-7.478,7.478-7.478,19.584,0,27.042l81.033,81.033l-81.587,81.587c-7.535,7.535-7.535,19.736,0,27.253s19.737,7.517,27.253,0
+                    l81.588-81.587l81.032,81.032c7.478,7.478,19.584,7.478,27.043,0c7.478-7.478,7.478-19.584,0-27.043l-81.033-81.032l82.181-82.18
+                    C422.873,216.399,422.873,204.179,415.338,196.662z M306,0C136.992,0,0,136.992,0,306s136.992,306,306,306
+                    c168.988,0,306-137.012,306-306S475.008,0,306,0z M306,573.75C158.125,573.75,38.25,453.875,38.25,306
+                    C38.25,158.125,158.125,38.25,306,38.25c147.875,0,267.75,119.875,267.75,267.75C573.75,453.875,453.875,573.75,306,573.75z" />
+                                                        </g>
+                                                    </svg>
+                                                </div>
+
+                                                <div class="input-wrapper twin">
+                                                    <input data-parsley-trigger="change" data-parsley-error-message="Last name required." type="text" name="ref dr last name" title="Doctor's last name" id="dlastname" value="" aria-required="true" required="" class="form__input">
+                                                    <label class="form__label reqstar" for="dlastname">Last Name
+                                                        <svg class="form__valid" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="611.983px" height="611.983px" viewBox="0 0 611.983 611.983" style="enable-background:new 0 0 611.983 611.983;" xml:space="preserve">
+                                                            <g>
+                                                                <path d="M217.625,515.458h-0.06c-6.517,0-12.775-2.65-17.379-7.255L7.147,313.77c-9.586-9.646-9.506-25.211,0.1-34.757
+                    c9.706-9.626,25.211-9.526,34.757,0.1l175.66,176.956L570.021,103.73c9.626-9.606,25.171-9.606,34.757,0
+                    c9.606,9.586,9.606,25.151,0,34.757L235.003,508.264C230.399,512.867,224.142,515.458,217.625,515.458z" />
+                                                            </g>
+                                                        </svg>
+                                                    </label>
+                                                    <svg class="form__close" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+                                                        <g id="_x31_0_41_">
+                                                            <path d="M415.338,196.662c-7.535-7.535-19.737-7.535-27.253,0l-82.181,82.18l-81.033-81.032c-7.478-7.478-19.584-7.478-27.042,0
+                    c-7.478,7.478-7.478,19.584,0,27.042l81.033,81.033l-81.587,81.587c-7.535,7.535-7.535,19.736,0,27.253s19.737,7.517,27.253,0
+                    l81.588-81.587l81.032,81.032c7.478,7.478,19.584,7.478,27.043,0c7.478-7.478,7.478-19.584,0-27.043l-81.033-81.032l82.181-82.18
+                    C422.873,216.399,422.873,204.179,415.338,196.662z M306,0C136.992,0,0,136.992,0,306s136.992,306,306,306
+                    c168.988,0,306-137.012,306-306S475.008,0,306,0z M306,573.75C158.125,573.75,38.25,453.875,38.25,306
+                    C38.25,158.125,158.125,38.25,306,38.25c147.875,0,267.75,119.875,267.75,267.75C573.75,453.875,453.875,573.75,306,573.75z" />
+                                                        </g>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <div class="input-wrapper">
+                                                <input data-parsley-trigger="change" data-parsley-error-message="Provider number required." type="text" name="ref dr provider number" title="Provider Number" id="dprovidernum" value="" aria-required="true" required="" class="form__input" maxlength="10">
+                                                <label class="form__label reqstar" for="dprovidernum">Provider Number
+                                                    <svg class="form__valid" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="611.983px" height="611.983px" viewBox="0 0 611.983 611.983" style="enable-background:new 0 0 611.983 611.983;" xml:space="preserve">
+                                                        <g>
+                                                            <path d="M217.625,515.458h-0.06c-6.517,0-12.775-2.65-17.379-7.255L7.147,313.77c-9.586-9.646-9.506-25.211,0.1-34.757
+                    c9.706-9.626,25.211-9.526,34.757,0.1l175.66,176.956L570.021,103.73c9.626-9.606,25.171-9.606,34.757,0
+                    c9.606,9.586,9.606,25.151,0,34.757L235.003,508.264C230.399,512.867,224.142,515.458,217.625,515.458z" />
+                                                        </g>
+                                                    </svg>
+                                                </label>
+                                                <svg class="form__close" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+                                                    <g id="_x31_0_41_">
+                                                        <path d="M415.338,196.662c-7.535-7.535-19.737-7.535-27.253,0l-82.181,82.18l-81.033-81.032c-7.478-7.478-19.584-7.478-27.042,0
+                    c-7.478,7.478-7.478,19.584,0,27.042l81.033,81.033l-81.587,81.587c-7.535,7.535-7.535,19.736,0,27.253s19.737,7.517,27.253,0
+                    l81.588-81.587l81.032,81.032c7.478,7.478,19.584,7.478,27.043,0c7.478-7.478,7.478-19.584,0-27.043l-81.033-81.032l82.181-82.18
+                    C422.873,216.399,422.873,204.179,415.338,196.662z M306,0C136.992,0,0,136.992,0,306s136.992,306,306,306
+                    c168.988,0,306-137.012,306-306S475.008,0,306,0z M306,573.75C158.125,573.75,38.25,453.875,38.25,306
+                    C38.25,158.125,158.125,38.25,306,38.25c147.875,0,267.75,119.875,267.75,267.75C573.75,453.875,453.875,573.75,306,573.75z" />
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                            <div class="input-wrapper">
+                                                <textarea data-parsley-trigger="keyup" data-parsley-minlength="2" data-parsley-validation-threshold="1" data-parsley-error-message="Address required." name="correspondence address" title="Correspondence Address" id="daddress" value="" aria-required="true" required="" class="form__input"></textarea>
+                                                <label class="form__label reqstar" for="daddress">Correspondence Address
+                                                    <svg class="form__valid" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="611.983px" height="611.983px" viewBox="0 0 611.983 611.983" style="enable-background:new 0 0 611.983 611.983;" xml:space="preserve">
+                                                        <g>
+                                                            <path d="M217.625,515.458h-0.06c-6.517,0-12.775-2.65-17.379-7.255L7.147,313.77c-9.586-9.646-9.506-25.211,0.1-34.757
+                    c9.706-9.626,25.211-9.526,34.757,0.1l175.66,176.956L570.021,103.73c9.626-9.606,25.171-9.606,34.757,0
+                    c9.606,9.586,9.606,25.151,0,34.757L235.003,508.264C230.399,512.867,224.142,515.458,217.625,515.458z" />
+                                                        </g>
+                                                    </svg>
+                                                </label>
+                                                <svg class="form__close" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+                                                    <g id="_x31_0_41_">
+                                                        <path d="M415.338,196.662c-7.535-7.535-19.737-7.535-27.253,0l-82.181,82.18l-81.033-81.032c-7.478-7.478-19.584-7.478-27.042,0
+                    c-7.478,7.478-7.478,19.584,0,27.042l81.033,81.033l-81.587,81.587c-7.535,7.535-7.535,19.736,0,27.253s19.737,7.517,27.253,0
+                    l81.588-81.587l81.032,81.032c7.478,7.478,19.584,7.478,27.043,0c7.478-7.478,7.478-19.584,0-27.043l-81.033-81.032l82.181-82.18
+                    C422.873,216.399,422.873,204.179,415.338,196.662z M306,0C136.992,0,0,136.992,0,306s136.992,306,306,306
+                    c168.988,0,306-137.012,306-306S475.008,0,306,0z M306,573.75C158.125,573.75,38.25,453.875,38.25,306
+                    C38.25,158.125,158.125,38.25,306,38.25c147.875,0,267.75,119.875,267.75,267.75C573.75,453.875,453.875,573.75,306,573.75z" />
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                            <div class="input-wrapper">
+                                                <input data-parsley-trigger="change" data-parsley-error-message="Email required." type="email" name="ref dr email" aria-required="true" required="" id="demail" value="" class="form__input">
+                                                <label class="form__label reqstar" for="demail">Email
+                                                    <svg class="form__valid" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="611.983px" height="611.983px" viewBox="0 0 611.983 611.983" style="enable-background:new 0 0 611.983 611.983;" xml:space="preserve">
+                                                        <g>
+                                                            <path d="M217.625,515.458h-0.06c-6.517,0-12.775-2.65-17.379-7.255L7.147,313.77c-9.586-9.646-9.506-25.211,0.1-34.757
+                    c9.706-9.626,25.211-9.526,34.757,0.1l175.66,176.956L570.021,103.73c9.626-9.606,25.171-9.606,34.757,0
+                    c9.606,9.586,9.606,25.151,0,34.757L235.003,508.264C230.399,512.867,224.142,515.458,217.625,515.458z" />
+                                                        </g>
+                                                    </svg>
+                                                </label>
+                                                <svg class="form__close" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+                                                    <g id="_x31_0_41_">
+                                                        <path d="M415.338,196.662c-7.535-7.535-19.737-7.535-27.253,0l-82.181,82.18l-81.033-81.032c-7.478-7.478-19.584-7.478-27.042,0
+                    c-7.478,7.478-7.478,19.584,0,27.042l81.033,81.033l-81.587,81.587c-7.535,7.535-7.535,19.736,0,27.253s19.737,7.517,27.253,0
+                    l81.588-81.587l81.032,81.032c7.478,7.478,19.584,7.478,27.043,0c7.478-7.478,7.478-19.584,0-27.043l-81.033-81.032l82.181-82.18
+                    C422.873,216.399,422.873,204.179,415.338,196.662z M306,0C136.992,0,0,136.992,0,306s136.992,306,306,306
+                    c168.988,0,306-137.012,306-306S475.008,0,306,0z M306,573.75C158.125,573.75,38.25,453.875,38.25,306
+                    C38.25,158.125,158.125,38.25,306,38.25c147.875,0,267.75,119.875,267.75,267.75C573.75,453.875,453.875,573.75,306,573.75z" />
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                            <div class="input-wrapper">
+                                                <input data-parsley-trigger="keyup" data-parsley-error-message="Phone number required." type="text" name="ref dr phone" title="Phone Number" id="dphone" value="" aria-required="false" class="form__input" maxlength="12">
+                                                <label class="form__label" for="dphone">Mobile Number
+                                                    <svg class="form__valid" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="611.983px" height="611.983px" viewBox="0 0 611.983 611.983" style="enable-background:new 0 0 611.983 611.983;" xml:space="preserve">
+                                                        <g>
+                                                            <path d="M217.625,515.458h-0.06c-6.517,0-12.775-2.65-17.379-7.255L7.147,313.77c-9.586-9.646-9.506-25.211,0.1-34.757
+                    c9.706-9.626,25.211-9.526,34.757,0.1l175.66,176.956L570.021,103.73c9.626-9.606,25.171-9.606,34.757,0
+                    c9.606,9.586,9.606,25.151,0,34.757L235.003,508.264C230.399,512.867,224.142,515.458,217.625,515.458z" />
+                                                        </g>
+                                                    </svg>
+                                                </label>
+                                                <svg class="form__close" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+                                                    <g id="_x31_0_41_">
+                                                        <path d="M415.338,196.662c-7.535-7.535-19.737-7.535-27.253,0l-82.181,82.18l-81.033-81.032c-7.478-7.478-19.584-7.478-27.042,0
+                    c-7.478,7.478-7.478,19.584,0,27.042l81.033,81.033l-81.587,81.587c-7.535,7.535-7.535,19.736,0,27.253s19.737,7.517,27.253,0
+                    l81.588-81.587l81.032,81.032c7.478,7.478,19.584,7.478,27.043,0c7.478-7.478,7.478-19.584,0-27.043l-81.033-81.032l82.181-82.18
+                    C422.873,216.399,422.873,204.179,415.338,196.662z M306,0C136.992,0,0,136.992,0,306s136.992,306,306,306
+                    c168.988,0,306-137.012,306-306S475.008,0,306,0z M306,573.75C158.125,573.75,38.25,453.875,38.25,306
+                    C38.25,158.125,158.125,38.25,306,38.25c147.875,0,267.75,119.875,267.75,267.75C573.75,453.875,453.875,573.75,306,573.75z" />
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                            <div class="input-wrapper">
+                                                <input data-parsley-trigger="keyup" data-parsley-error-message="Fax number required." type="text" name="ref dr fax" title="Fax" id="dfax" value="" aria-required="false" class="form__input" maxlength="9">
+                                                <label class="form__label" for="dfax">Fax
+                                                    <svg class="form__valid" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="611.983px" height="611.983px" viewBox="0 0 611.983 611.983" style="enable-background:new 0 0 611.983 611.983;" xml:space="preserve">
+                                                        <g>
+                                                            <path d="M217.625,515.458h-0.06c-6.517,0-12.775-2.65-17.379-7.255L7.147,313.77c-9.586-9.646-9.506-25.211,0.1-34.757
+                    c9.706-9.626,25.211-9.526,34.757,0.1l175.66,176.956L570.021,103.73c9.626-9.606,25.171-9.606,34.757,0
+                    c9.606,9.586,9.606,25.151,0,34.757L235.003,508.264C230.399,512.867,224.142,515.458,217.625,515.458z" />
+                                                        </g>
+                                                    </svg>
+                                                </label>
+                                                <svg class="form__close" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+                                                    <g id="_x31_0_41_">
+                                                        <path d="M415.338,196.662c-7.535-7.535-19.737-7.535-27.253,0l-82.181,82.18l-81.033-81.032c-7.478-7.478-19.584-7.478-27.042,0
+                    c-7.478,7.478-7.478,19.584,0,27.042l81.033,81.033l-81.587,81.587c-7.535,7.535-7.535,19.736,0,27.253s19.737,7.517,27.253,0
+                    l81.588-81.587l81.032,81.032c7.478,7.478,19.584,7.478,27.043,0c7.478-7.478,7.478-19.584,0-27.043l-81.033-81.032l82.181-82.18
+                    C422.873,216.399,422.873,204.179,415.338,196.662z M306,0C136.992,0,0,136.992,0,306s136.992,306,306,306
+                    c168.988,0,306-137.012,306-306S475.008,0,306,0z M306,573.75C158.125,573.75,38.25,453.875,38.25,306
+                    C38.25,158.125,158.125,38.25,306,38.25c147.875,0,267.75,119.875,267.75,267.75C573.75,453.875,453.875,573.75,306,573.75z" />
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                        </fieldset>
+                                        <input type="hidden" value="" class="">
+                                        <div class="mt-3">
+                                            <input type="checkbox" class="qcheck" id="drcheck" name="dr certification" value="yes" data-parsley-error-message=" This must be selected." required />
+                                            <label for="drcheck" class="textc label reqstar">I certify that I am a registered Medical Practitioner</label>
+                                        </div>
+                                        <input type="text" name="_honey" style="display:none">
+                                        <button type="submit" class="boldbtn mt-3 py-3" style="border: none; width: 100%">Submit</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
-                <div class="col-1"></div>
+                <div class="col-sm-1"></div>
             </div>
-            <div class="row">
+            <div class="row" style="background: var(--color-bg)">
                 <div class="col-1"></div>
                 <div class="col-10">
                     <footer class="main-footer" data-scroll>
@@ -597,7 +1226,179 @@
     <script type="text/javascript" src="assets/js/cursor.js"></script>
     <script type="text/javascript" src="assets/js/progressbar.js"></script>
     <script type="text/javascript" src="assets/js/daygreeting.js"></script>
+    <script type="text/javascript" src="assets/js/form.js"></script>
+    <script type="text/javascript" src="assets/js/jcf.js"></script>
+    <script type="text/javascript" src="assets/js/jcf.select.js"></script>
+    <script src="assets/datepicker-1.0.9/dist/datepicker.js"></script>
+    <!--<script type="text/javascript" src="assets/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js"></script>
     <script>
+        jQuery(function() {
+            jcf.replaceAll();
+        });
+
+    </script>
+    <!--<script>
+        $('[data-toggle="datepicker"]').datepicker({
+            format: {
+                /*
+                 * Say our UI should display a week ahead,
+                 * but textbox should store the actual date.
+                 * This is useful if we need UI to select local dates,
+                 * but store in UTC
+                 */
+                toDisplay: function(date, format, language) {
+                    var d = new Date(date);
+                    //d.setDate(d.getDate() - 7);
+                    return d.toISOString();
+                },
+                toValue: function(date, format, language) {
+                    var d = new Date(date);
+                    //d.setDate(d.getDate() + 7);
+                    return new Date(d);
+                }
+            },
+            todayHighlight: true
+        });
+
+    </script>-->
+    <script>
+        $(function() {
+            $('[data-toggle="datepicker"]').datepicker({
+                format: 'dd/mm/yyyy',
+                autoHide: 'true'
+            })
+
+
+
+            /*$().on('pick.datepicker', function(e) {
+                e.preventDefault();
+
+                let d = new Date(e.date);
+
+                let v = (d.getFullYear() + '-' + ((d.getMonth() + 1).toString().padStart(2, '0')) + '-' + (d.getDate().toString().padStart(2, '0')));
+
+                console.log(v);
+
+                
+                //Or:
+                //$( '#my_date_to_db_input' ).val( v );
+                
+                //Or if, for some reason, you want to set this value to the original datepicker target: 
+                //$( e.target ).val( v );
+                
+            });*/
+        });
+        /*$('[data-toggle="datepicker"]').datepicker({
+            format: 'dd/mm/yyyy'
+        });*/
+
+        /* FormatDate */
+        function formatDate(userDate) {
+
+            var userDate = document.getElementById('date').value;
+            var rawDate_array = [],
+                newDate_array = [];
+            var month, day, year, reformattedDate;
+
+            for (i = 0; i < userDate.length; i++) {
+                if (userDate[i] != "/") {
+                    rawDate_array.push(userDate[i]);
+                }
+            }
+            month = rawDate_array.slice(2, 4).join("");
+            day = rawDate_array.slice(0, 2).join("");
+            year = rawDate_array.slice(4, 8).join("");
+            newDate_array.push(year, month, day);
+            reformattedDate = newDate_array.join("-");
+
+            /*document.getElementById("outputDate").innerHTML = reformattedDate;*/
+
+            $("#date").change(function() {
+                $("#outputDate").val(reformattedDate);
+            });
+            /*$("#date").on('change', function () {
+    $("#outputDate").val(reformattedDate);
+});*/
+        }
+
+    </script>
+    <script>
+        (function($) {
+            'use strict'
+
+            $('#form').parsley().on('form:submit', function() {
+                return true;
+            });;
+
+            $(document).ready(function() {
+                $('.input-wrapper input, textarea').filter(function() {
+                    if ($(this).val().length > 0) {
+                        $(this).parent().addClass('has-content');
+                    } else {
+                        $(this).parent().removeClass('has-content');
+                    }
+
+                    if ($(this).hasClass('parsley-success')) {
+                        $(this).parent().addClass('input--success');
+                    } else {
+                        $(this).parent().removeClass('input--success');
+                    }
+                });
+            });
+
+            $('.input-wrapper input, textarea').blur(function() {
+                if ($(this).val().length > 0) {
+                    $(this).parent().addClass('has-content');
+                } else {
+                    $(this).parent().removeClass('has-content');
+                }
+
+                if ($(this).hasClass('parsley-success')) {
+                    $(this).parent().addClass('input--success');
+                } else {
+                    $(this).parent().removeClass('input--success');
+                }
+            });
+
+            $('.form__close').on('click', function() {
+                $(this).prevAll('.form__input').val('');
+                $(this).prevAll('.form__input').removeClass('parsley-success');
+                $(this).closest('.input-wrapper').removeClass('has-content input--success');
+            });
+
+
+        })(jQuery);
+
+    </script>
+    <script>
+        $("input[title='Phone Number']").on("keyup blur", function(e) {
+            var v = $(this).val();
+            v = v.replace(/[^\d]/g, '');
+            v = v.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3');
+            /*if (v.length < 6) {
+                v = v.replace(/(\d{2})/, '($1) ');
+            } else if (v.length < 10) {
+                v = v.replace(/(\d{2})(\d{4})/, '($1) $2-');
+            } else if (v.length < 11) {
+                v = v.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3');
+            } else {
+                v = v.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+            }*/
+            $(this).val(v);
+        });
+
+        $("input[title='Fax']").on("keyup blur", function(e) {
+            var v = $(this).val();
+            v = v.replace(/[^\d]/g, '');
+            v = v.replace(/(\d{4})(\d{4})/, '$1 $2');
+            $(this).val(v);
+        });
+
+        /*$("input[title='Phone Number']").keyup(function() {
+            $(this).val($(this).val().replace(/^(\d{4})(\d{3})(\d)+$/, "$1 $2 $3"));
+        });*/
+
         if ('CSS' in window && 'supports' in window.CSS) {
             var support = window.CSS.supports('mix-blend-mode', 'difference');
             // tests for mix-blend-mode support

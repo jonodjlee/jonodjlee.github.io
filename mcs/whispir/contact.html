@@ -32,12 +32,9 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" id="bootstrap-css">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
+    <link rel="stylesheet" href="../assets/css/form.css">
+
     <style>
-        #downloadable-report-form ._form-content ._field-wrapper input[type=text],
-        #le_support_form .slds-form-element__control .slds-input,
-        #le_support_form .slds-form-element__control .slds-textarea,
-        .form-control,
-        .hs-form .hs-input,
         .form .inputWrapper input[type=password],
         .form .inputWrapper input[type=text],
         .form .inputWrapper textarea {
@@ -51,11 +48,6 @@
             line-height: 16px
         }
 
-        #downloadable-report-form ._form-content ._field-wrapper input[type=text]:focus,
-        #le_support_form .slds-form-element__control .slds-input:focus,
-        #le_support_form .slds-form-element__control .slds-textarea:focus,
-        .form-control:focus,
-        .hs-form .hs-input:focus,
         .form .inputWrapper input[type=password]:focus,
         .form .inputWrapper input[type=text]:focus,
         .form .inputWrapper textarea:focus {
@@ -64,30 +56,15 @@
             border-color: #1515ff
         }
 
-        #le_support_form .slds-form-element:last-child,
-        ._form_element:last-child,
-        .field-container-D:last-child,
-        .form-group:last-child,
-        .hs-form-field:last-child,
-        .input-group:last-child {
+        .fieldcontainer:last-child {
             padding-left: 10px
         }
 
-        #le_support_form .slds-form-element:first-child,
-        ._form_element:first-child,
-        .field-container-D:first-child,
-        .form-group:first-child,
-        .hs-form-field:first-child,
-        .input-group:first-child {
+        .fieldcontainer:first-child {
             padding-left: 0
         }
 
-        #le_support_form .slds-form-element label,
-        ._form_element label,
-        .field-container-D label,
-        .form-group label,
-        .hs-form-field label,
-        .input-group label {
+        .fieldcontainer label {
             position: relative;
             margin-bottom: 0;
             top: 36px;
@@ -101,34 +78,12 @@
             pointer-events: none
         }
 
-        #le_support_form .slds-form-element label.focused,
-        #le_support_form .slds-form-element label.slds-form-element__label,
-        ._form_element label.focused,
-        ._form_element label.slds-form-element__label,
-        .field-container-D label.focused,
-        .field-container-D label.slds-form-element__label,
-        .form-group label.focused,
-        .form-group label.slds-form-element__label,
-        .hs-form-field label.focused,
-        .hs-form-field label.slds-form-element__label,
-        .input-group label.focused,
-        .input-group label.slds-form-element__label {
+        .fieldcontainer label.focused {
             transform: scale(.8) translateX(-16px) translateY(-32px);
             color: #1515ff
         }
 
-        #le_support_form .slds-form-element label.postField,
-        #le_support_form .slds-form-element label.slds-radio__label,
-        ._form_element label.postField,
-        ._form_element label.slds-radio__label,
-        .field-container-D label.postField,
-        .field-container-D label.slds-radio__label,
-        .form-group label.postField,
-        .form-group label.slds-radio__label,
-        .hs-form-field label.postField,
-        .hs-form-field label.slds-radio__label,
-        .input-group label.postField,
-        .input-group label.slds-radio__label {
+        .fieldcontainer label.postField {
             top: 0;
             left: 12px
         }
@@ -141,16 +96,11 @@
             max-width: none
         }
 
-        .form .field-container-D {
+        .form .fieldcontainer {
             width: 100%
         }
 
-        .field-container-D .errMsg span {
-            font-size: 14px;
-            font-weight: 400
-        }
-
-        .form .section.inline.group .field-container-D {
+        .form .section.inline.group .fieldcontainer {
             width: 50%
         }
 
@@ -162,26 +112,24 @@
             flex-wrap: wrap
         }
 
-        @media screen and (max-width:768px) {
-
-            .form-group:last-child,
-            .hs-form-field:last-child {
-                padding-left: 0
-            }
+        .form .label.reqstar:after {
+            content: " *";
+            color: #F00;
+            font-size: 90%;
         }
 
+
         @media screen and (max-width:567px) {
-            .form .section.inline.group .field-container-D {
+            .form .section.inline.group .fieldcontainer {
                 width: 100%
             }
 
-            .form .section.inline.group .field-container-D:last-child {
+            .form .section.inline.group .fieldcontainer:last-child {
                 padding-left: 0
             }
         }
 
     </style>
-
 
 </head>
 
@@ -196,52 +144,52 @@
                         <div class="formcontainer">
                             <div class="">
                                 <div class="form" dir="ltr">
-                                    <form method="post" action="https://www.tfaforms.com/rest/responses/processor" class="hintsBelow labelsAbove" role="form">
+                                    <form method="post" action="" role="form">
                                         <div class="section inline group">
-                                            <div class="oneField field-container-D">
-                                                <label class="label preField reqMark">First Name</label>
+                                            <div class="oneField fieldcontainer">
+                                                <label class="label reqstar">First Name</label>
                                                 <br>
                                                 <div class="inputWrapper">
                                                     <input type="text" value="" aria-required="true" title="First Name" class="required">
                                                 </div>
                                             </div>
-                                            <div class="oneField field-container-D">
-                                                <label class="label preField reqMark">Last Name</label>
+                                            <div class="oneField fieldcontainer">
+                                                <label class="label">Last Name</label>
                                                 <br>
                                                 <div class="inputWrapper">
                                                     <input type="text" value="" aria-required="true" title="Last Name" class="required">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="oneField field-container-D">
-                                            <label class="label preField reqMark">Work Email&nbsp;</label>
+                                        <div class="oneField fieldcontainer">
+                                            <label class="label">Work Email&nbsp;</label>
                                             <br>
                                             <div class="inputWrapper">
                                                 <input type="text" value="" aria-required="true" title="Work Email " class="required">
                                             </div>
                                         </div>
-                                        <div class="oneField field-container-D">
-                                            <label class="label preField reqMark">Phone Number</label>
+                                        <div class="oneField fieldcontainer">
+                                            <label class="label">Phone Number</label>
                                             <br>
                                             <div class="inputWrapper">
                                                 <input type="text" value="" aria-required="true" title="Phone Number" class="validate-integer required">
                                             </div>
                                         </div>
-                                        <div class="oneField field-container-D">
-                                            <label class="label preField reqMark">Company Name</label>
+                                        <div class="oneField fieldcontainer">
+                                            <label class="label">Company Name</label>
                                             <br>
                                             <div class="inputWrapper">
                                                 <input type="text" value="" aria-required="true" title="Company Name" class="required">
                                             </div>
                                         </div>
-                                        <div class="oneField field-container-D">
-                                            <label class="label preField reqMark">Comments</label>
+                                        <div class="oneField fieldcontainer">
+                                            <label class="label">Comments</label>
                                             <br>
                                             <div class="inputWrapper">
                                                 <textarea aria-required="true" title="Comments" class="required"></textarea>
                                             </div>
                                         </div>
-                                        <div class="oneField field-container-D" role="group">
+                                        <div class="oneField fieldcontainer" role="group">
                                             <div class="inputWrapper"><span class="choices vertical "><span class="oneChoice"><input type="checkbox" class="" checked="" data-default-value="true"><label class="label postField"><span class="input-checkbox-faux"></span><span style="color: rgb(32, 32, 32); font-family: Arial; font-size: 13px; white-space: pre-wrap;">Opt in to help Whispir with its user research and improve the site</span></label></span></span></div>
                                         </div>
                                         <input type="hidden" value="" class="">
@@ -265,9 +213,9 @@
     <script>
         $(document).ready(function() {
             function t(e) {
-                return $(e).parents(".field-container-D, .form-group, .input-group, .slds-form-element, ._form_element").find("label")
+                return $(e).parents(".fieldcontainer").find("label")
             }
-            var e = ".form-control, input[type='text'], input[type='password'], input[type='email'], select, textarea",
+            var e = "input[type='text'], input[type='password'], input[type='email'], select, textarea",
                 n = document.getElementById("checkoutSubmitBtn");
 
             $(document).on("focus", e, function(e) {

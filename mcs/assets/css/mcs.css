@@ -110,6 +110,9 @@ background-size: 200px 300px;*/
 .textp1 {
     font-size: 0.8em;
 }
+.textc {
+    color: var(--color-contrast-higher);
+}
 
 /*#button1 {
     width: 400px;
